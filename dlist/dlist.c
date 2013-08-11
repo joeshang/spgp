@@ -58,7 +58,7 @@ static DListNode *dlist_get_node(DList *thiz,
         size_t index, int return_last_if_outrange)
 {
     DListNode *iter = thiz->head;
-    while (iter != NULL && index > 0)
+    while (iter->next != NULL && index > 0)
     {
         iter = iter->next;
         index--;
@@ -187,6 +187,8 @@ Ret dlist_delete(DList *thiz, size_t index)
         }
 
         dlist_node_destroy(cursor, thiz->data_destroy, thiz->data_destroy_ctx);
+
+        thiz->length--;
     }
 
     return RET_OK;
